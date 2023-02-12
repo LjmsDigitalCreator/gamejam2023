@@ -8,6 +8,7 @@ var friction = 0.5
 var resistance = 0.7
 var stop=0
 var low=0
+
 func jump ():
 	velocity.y -= 150
 func Power_Up():
