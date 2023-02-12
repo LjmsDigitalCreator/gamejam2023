@@ -8,7 +8,15 @@ var resistance =0.7
 var friction = 0.5
 var dobble_jump = 0
 var detenido = 0
+onready var animaciones=["idle", "Astronauta","idle_Cienpies","idle_Lagarto","idle_Mantis","idle_Payaso", "idle_Pez","idle_Pez2", "idle_PezGlobo","idle_Rana","idle_Bruja" ]
+onready var sprites=[$Sprite, $Sprite2,$Sprite3,$Sprite4,$Sprite5,$Sprite6,$Sprite7,$Sprite8,$Sprite9,$Sprite10,$Sprite11]
 
+func _ready():
+	var v=0
+	sprites[randi() % 12].visible = true
+	$AnimationPlayer.play(animaciones[randi() % 12])
+	
+	
 func move():
 	speed=300
 	max_speed=150
@@ -30,12 +38,17 @@ func Jump():
 func Doble_Jump():
 	velocity.y -= 250
 	
-
+	
 func _physics_process(delta): 
 	var movement_x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	if movement_x != 0:
 		velocity.x += movement_x * speed * delta
 		velocity.x = clamp(velocity.x, -max_speed, max_speed) 
+		
+	if Input.is_action_just_pressed("ui_left"):
+		$Sprite2.flip_h = true
+	elif Input.is_action_just_pressed("ui_right"):
+		$Sprite2.flip_h = false
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		stop()
@@ -62,4 +75,5 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 
 	velocity = move_and_slide(velocity,Vector2.UP)
+	 
 	
